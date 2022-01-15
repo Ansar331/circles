@@ -1,0 +1,53 @@
+from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5 import uic, QtGui, QtWidgets
+from PyQt5.QtGui import QPainter, QColor
+import random
+import sys
+
+
+class Window(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.setGeometry(300, 300, 1000, 700)
+        self.should_paint_circle = False
+        self.lolo = QtWidgets.QPushButton('НАЖАТЬ', self)
+        self.lolo.setGeometry(10, 10, 200, 100)
+        self.colors = ['RED', 'BLUE', 'GREEN', 'YELLOW']
+        self.lolo.clicked.connect(self.paintcircle)
+        self.lolo.clicked.connect(self.paintEvent)
+        self.should_paint_circle = False
+
+    def paintEvent(self, event):
+        if self.should_paint_circle:
+            painter = QtGui.QPainter(self)
+            painter.setBrush(QColor(self.colors[random.randint(0, 3)]))
+            pen = QtGui.QPen()
+            pen.setWidth(5)
+            painter.setPen(pen)
+            a = random.randint(1, 500)
+            b = random.randint(1, 500)
+            c = random.randint(1, 200)
+            a2 = random.randint(1, 500)
+            b2 = random.randint(1, 500)
+            c2 = random.randint(1, 200)
+            a3 = random.randint(1, 500)
+            b3 = random.randint(1, 500)
+            c3 = random.randint(1, 200)
+            painter.drawEllipse(a, b, c, c)
+            painter.drawEllipse(a2, b2, c2, c2)
+            painter.drawEllipse(a3, b3, c3, c3)
+
+    def paintcircle(self):
+        self.should_paint_circle = True
+        self.update()
+
+
+def application():
+    app = QApplication(sys.argv)
+    window = Window()
+    window.show()
+    sys.exit(app.exec())
+
+
+if __name__ == "__main__":
+    application()
